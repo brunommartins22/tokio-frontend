@@ -106,7 +106,7 @@ export class Cliente implements OnInit {
             this.listClient = data.json();
 
         }, erro => {
-        this.msgErrorInit(erro.message)
+            this.msgErrorInit(erro.message)
         })
     }
 
@@ -139,7 +139,7 @@ export class Cliente implements OnInit {
             this.http.put("http://localhost:8080/api/clientes", resp.id, args).subscribe(data => {
                 this.loadClientAll();
             }, erro => {
-
+                this.msgErrorInit(erro.message);
             });
         }
     }
