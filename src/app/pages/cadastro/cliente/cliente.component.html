@@ -1,0 +1,213 @@
+<div class="form-group">
+    <div style="margin: auto;width: 99%;">
+        <div class="col-g-12" *ngIf="!formulario">
+            <br>
+            <div *ngIf="isVisibleMsg" class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{msgInit}}
+                <button type="button" (click)="isVisibleMsg=false" class="close" data-dismiss="alert"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="col-g-12"
+                style="color: white;font-weight: 600;text-align: center;background:  #0174B1;height: 40px;">
+                <label class="mr-2">Listagem de Cliente(s)</label>
+                <button type="button" (click)="insertClient()" title="Adiconar Cliente"
+                    class="btn btn-primary mr-1 fa fa-plus"> Adicionar</button>
+            </div>
+            <div class="col-g-12 table-responsive">
+                <table class="table table-striped table-hover table-sm">
+                    <thead class="thead-light">
+                        <th style="width: 80px;text-align: center;">Id</th>
+                        <th style="width: 120px;text-align: center;">CPF</th>
+                        <th style="min-width: 300px;text-align: justify;">Cliente</th>
+                        <th style="width: 120px;text-align: center;">Ação</th>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let item of listClient | paginate: { itemsPerPage: 5, currentPage: paginaAtualCliente }; let i = index">
+                            <td style="width: 80px;text-align: center;">{{item.id}}</td>
+                            <td style="width: 120px;text-align: center;">{{item.cpf}}</td>
+                            <td style="width: 300px;text-align: justify;">{{item.name}}</td>
+                            <td style="width: 120px; text-align: center;">
+                                <button (click)="editClient(item)" type="button" title="Editar Cliente"
+                                    class="btn btn-primary mr-1 fa fa-pencil"></button>
+                                <button (click)="removeClient(item)" type="button" title="Remover Cliente"
+                                    class="btn btn-primary fa fa-trash"></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="col-g-12" style="text-align: center;">
+                    <pagination-controls (pageChange)="paginaAtualCliente = $event" previousLabel="Ant"
+                        nextLabel="Próx"></pagination-controls>
+                </div>
+            </div>
+
+        </div>
+        <div *ngIf="formulario">
+            <div class="card ">
+                <div class="card-header">
+                    <i class="fa fa-id-card-o"> {{estadoTela}} Cliente</i>
+
+                </div>
+                <div class="card-body">
+                    <div *ngIf="isVisibleMsg" class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Error:</strong> {{msgForm}}
+                        <button type="button" (click)="isVisibleMsg=false" class="close" data-dismiss="alert"
+                            aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="row">
+                        <div class="col-g-12 col-md-6">
+                            <label>Nome do Cliente</label><br>
+                            <input #nome="ngModel" [(ngModel)]="clienteSelecionado.name" autocomplete="off"
+                                class="form-control" style="width: 100%;" type="text">
+                        </div>
+                        <div class="col-g-12 col-md-2">
+                            <label>CPF</label><br>
+                            <input onkeypress="$(this).mask('000.000.000-00');" #nome="ngModel"
+                                [(ngModel)]="clienteSelecionado.cpf" autocomplete="off" class="form-control"
+                                style="width: 100%;" type="text">
+                        </div>
+                    </div>
+                    <br>
+                    <div *ngIf="!enderecoFormulario">
+                        <div class="col-g-12"
+                            style="color: white;font-weight: 600;text-align: center;background:  #0174B1;height: 40px;">
+                            <label class="mr-2">Listagem de Endereço(s)</label>
+                            <button type="button" (click)="insertEndereco()" title="Adiconar Endereço"
+                                class="btn btn-primary mr-1 fa fa-plus"> Adicionar</button>
+                        </div>
+                        <div class="col-g-12 table-responsive">
+                            <table class="table table-striped table-hover table-sm">
+                                <thead class="thead-light">
+                                    <th style="width: 80px;text-align: center;">CEP</th>
+                                    <th style="width: 300px;text-align: justify;">Endereco</th>
+                                    <th style="width: 120px;text-align: center;">Estado</th>
+                                    <th style="width: 120px;text-align: center;">Cidade</th>
+                                    <th style="width: 120px;text-align: center;">Ação</th>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let item of clienteSelecionado.enderecos | paginate: { itemsPerPage: 5, currentPage: paginaAtualEndereco }; let i = index">
+                                        <td style="width: 80px;text-align: center;">{{item.cep}}</td>
+                                        <td style="width: 300px;text-align: justify;">{{item.endereco}}</td>
+                                        <td style="width: 120px;text-align: center;">{{item.estado}}</td>
+                                        <td style="width: 120px;text-align: center;">{{item.cidade}}</td>
+                                        <td style="width: 120px; text-align: center;">
+                                            <button (click)="editEndereco(item)" type="button" title="Editar Endereço"
+                                                class="btn btn-primary mr-1 fa fa-pencil"></button>
+                                            <button (click)="removeEndereco(item)" type="button"
+                                                title="Remover Endereco" class="btn btn-primary fa fa-trash"></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-g-12" style="text-align: center;">
+                                <pagination-controls (pageChange)="paginaAtualEndereco = $event" previousLabel="Ant"
+                                    nextLabel="Próx"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div *ngIf="enderecoFormulario" style="background: #F1F1F1;">
+                        <fieldset>
+                            <legend>
+                                <i class="fa fa-map-marker"> Endereço </i>
+                                <hr>
+                            </legend>
+                            <div class="row">
+                                <div class="col-g-12 col-md-2">
+                                    <label>CEP</label><br>
+                                    <input onkeypress="$(this).mask('00.000-000');" #nome="ngModel"
+                                        (change)="loadEnderecoByCep()" [(ngModel)]="enderecoSelecionado.cep"
+                                        autocomplete="off" class="form-control" style="width: 100%;" type="text">
+                                </div>
+                                <div *ngIf="progressSpinner" class="spinner-border text-primary" role="status"
+                                    style="position: relative;top:30px;">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-g-12 col-md-2">
+                                    <label>Estado</label><br>
+                                    <input #nome="ngModel" [(ngModel)]="enderecoSelecionado.estado" autocomplete="off"
+                                        class="form-control" style="width: 100%;" type="text">
+                                </div>
+                                <div class="col-g-12 col-md-2">
+                                    <label>Cidade</label><br>
+                                    <input #nome="ngModel" [(ngModel)]="enderecoSelecionado.cidade" autocomplete="off"
+                                        class="form-control" style="width: 100%;" type="text">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-g-12 col-md-10">
+                                    <label>Endereço</label><br>
+                                    <input #nome="ngModel" [(ngModel)]="enderecoSelecionado.endereco" autocomplete="off"
+                                        class="form-control" style="width: 100%;" type="text">
+                                </div>
+                                <div class="col-g-12 col-md-2">
+                                    <label>Número</label><br>
+                                    <input #nome="ngModel" [(ngModel)]="enderecoSelecionado.numero" autocomplete="off"
+                                        class="form-control" style="width: 100%;" type="text">
+                                </div>
+
+                                <div class="col-g-12 col-md-2">
+                                    <label>Bairro</label><br>
+                                    <input #nome="ngModel" [(ngModel)]="enderecoSelecionado.bairro" autocomplete="off"
+                                        class="form-control" style="width: 100%;" type="text">
+                                </div>
+
+
+                                <div class="col-g-12 col-md-10">
+                                    <label>Complemento</label><br>
+                                    <input #nome="ngModel" [(ngModel)]="enderecoSelecionado.complemento"
+                                        autocomplete="off" class="form-control" style="width: 100%;" type="text">
+                                </div>
+                                <div class="col-g-12 col-md-2">
+                                    <label>Fone 1</label><br>
+                                    <input onkeypress="$(this).mask('(00) 00000-0009')" #nome="ngModel"
+                                        [(ngModel)]="enderecoSelecionado.fone1" autocomplete="off" class="form-control"
+                                        style="width: 100%;" type="text">
+                                </div>
+
+                                <div class="col-g-12 col-md-2">
+                                    <label>Fone 2</label><br>
+                                    <input onkeypress="$(this).mask('(00) 00000-0009')" #nome="ngModel"
+                                        [(ngModel)]="enderecoSelecionado.fone2" autocomplete="off" class="form-control"
+                                        style="width: 100%;" type="text">
+                                </div>
+
+
+                                <div class="col-g-12 col-md-8">
+                                    <label>Email</label><br>
+                                    <input [(ngModel)]="enderecoSelecionado.email" autocomplete="off"
+                                        class="form-control" style="width: 100%;" type="text">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="card-footer">
+                                <button (click)="confirmEndereco()" type="button"
+                                    class="btn btn-primary mr-1">Confirmar</button>
+                                <button (click)="cancelEndereco()" style="float: right;" type="button"
+                                    class="btn btn-primary ">Cancelar</button>
+                            </div>
+                        </fieldset>
+                    </div>
+
+
+                </div>
+                <div class="card-footer">
+                    <button (click)="saveClient()" type="button" class="btn btn-primary mr-1">Confirmar</button>
+                    <button (click)="cancelClient()" style="float: right;" type="button"
+                        class="btn btn-primary ">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
