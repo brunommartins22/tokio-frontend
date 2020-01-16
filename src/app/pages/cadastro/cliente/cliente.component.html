@@ -18,7 +18,7 @@
                             style="color: white;font-weight: 600;text-align: center;background:  #0174B1;height: 40px;font-size: 14px;">
                             <label class="mr-2">Listagem de Cliente(s)</label>
                             <button type="button" (click)="insertClient()" title="Adiconar Cliente"
-                                class="btn btn-primary mr-1 fa fa-plus"> Adicionar</button>
+                                class="btn btn-primary mr-1 fa fa-plus" id="add-cliente"> Adicionar</button>
                         </div>
                         <div class="col-g-12 table-responsive">
                             <table class="table table-striped table-hover table-sm">
@@ -69,7 +69,7 @@
                                     <div class="col-g-12 col-md-6">
                                         <label>Nome do Cliente</label><br>
                                         <input #nome="ngModel" [(ngModel)]="clienteSelecionado.name" autocomplete="off"
-                                            class="form-control" style="width: 100%;" type="text">
+                                            class="form-control" id="nome-cliente" style="width: 100%;" type="text">
                                     </div>
                                     <div class="col-g-12 col-md-2">
                                         <label>CPF</label><br>
@@ -84,7 +84,7 @@
                                         style="color: white;font-weight: 600;text-align: center;background:  #0174B1;height: 40px;font-size: 14px;">
                                         <label class="mr-2">Listagem de Endereço(s)</label>
                                         <button type="button" (click)="insertEndereco()" title="Adiconar Endereço"
-                                            class="btn btn-primary mr-1 fa fa-plus"> Adicionar</button>
+                                            class="btn btn-primary mr-1 fa fa-plus" id="add-endereco"> Adicionar</button>
                                     </div>
                                     <div class="col-g-12 table-responsive">
                                         <table class="table table-striped table-hover table-sm">
@@ -136,7 +136,7 @@
                                                 <div class="col-g-12 col-md-2">
                                                     <label>CEP</label><br>
                                                     <input onkeypress="$(this).mask('00.000-000');" #nome="ngModel"
-                                                        (change)="loadEnderecoByCep()"
+                                                        (change)="loadEnderecoByCep()" id="cep" 
                                                         [(ngModel)]="enderecoSelecionado.cep" autocomplete="off"
                                                         class="form-control" style="width: 100%;" type="text">
                                                 </div>

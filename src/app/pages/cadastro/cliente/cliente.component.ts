@@ -98,6 +98,7 @@ export class Cliente implements OnInit {
         this.isVisibleMsg = false;
         this.msgInit = "";
         this.loadClientAll();
+
     }
 
 
@@ -107,6 +108,9 @@ export class Cliente implements OnInit {
 
             this.listClient = data.json();
 
+            setTimeout(() => {
+                document.getElementById("add-cliente").focus()
+            }, 100);
         }, erro => {
             this.msgErrorInit(erro.message)
         })
@@ -118,6 +122,9 @@ export class Cliente implements OnInit {
         this.estadoTela = "Adicionando";
         this.enderecoFormulario = false;
         this.clienteSelecionado = { id: null, enderecos: [] };
+        setTimeout(() => {
+            document.getElementById("nome-cliente").focus();
+        }, 100);
 
     }
 
@@ -127,7 +134,9 @@ export class Cliente implements OnInit {
         this.enderecoFormulario = false;
         this.estadoTela = "Editando";
         this.clienteSelecionado = resp;
-
+        setTimeout(() => {
+            document.getElementById("nome-cliente").focus();
+        }, 100);
     }
 
     public removeClient(resp: any) {
@@ -209,11 +218,17 @@ export class Cliente implements OnInit {
         this.enderecoFormulario = true;
         this.enderecoSelecionado = {};
         this.isEdit = false;
+        setTimeout(() => {
+            document.getElementById("cep").focus();
+        }, 100);
     }
     public editEndereco(resp: any) {
         this.enderecoFormulario = true;
         this.enderecoSelecionado = resp;
         this.isEdit = true;
+        setTimeout(() => {
+            document.getElementById("cep").focus();
+        }, 100);
     }
     public removeEndereco(resp: any) {
         if (confirm("Deseja realmente remover o endereço selecionado?")) {
@@ -223,6 +238,9 @@ export class Cliente implements OnInit {
                     break;
                 }
             }
+            setTimeout(() => {
+                document.getElementById("cep").focus();
+            }, 100);
         }
     }
     public confirmEndereco() {
@@ -286,7 +304,10 @@ export class Cliente implements OnInit {
     public cancelEndereco() {
         this.enderecoFormulario = false;
         this.enderecoSelecionado = null;
-        this.isEdit=false;
+        this.isEdit = false;
+        setTimeout(() => {
+            document.getElementById("add-endereco").focus()
+        }, 100);
     }
 
     //********************** end methos Process **********************/
