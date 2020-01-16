@@ -28,6 +28,8 @@ export class Cliente implements OnInit {
     msgForm: string = null;
     isVisibleMsg: boolean = null;
 
+    isEdit: boolean = false;
+
     //********************** init methos Attributes ***********************/
 
     loadEnderecoByCep() {
@@ -206,10 +208,12 @@ export class Cliente implements OnInit {
     public insertEndereco() {
         this.enderecoFormulario = true;
         this.enderecoSelecionado = {};
+        this.isEdit = false;
     }
     public editEndereco(resp: any) {
         this.enderecoFormulario = true;
         this.enderecoSelecionado = resp;
+        this.isEdit = true;
     }
     public removeEndereco(resp: any) {
         if (confirm("Deseja realmente remover o endereço selecionado?")) {
@@ -254,22 +258,35 @@ export class Cliente implements OnInit {
             return;
         }
 
-        let resp = this.clienteSelecionado.enderecos.filter((e) => {
-            return e.cep == this.enderecoSelecionado.cep;
-        })
+        if (!this.isEdit) {
+            let resp = this.clienteSelecionado.enderecos.filter((e) => {
+                return e.cep == this.enderecoSelecionado.cep;
+            })
 
-        if (resp.length > 0) {
-            this.msgError("CEP ja informado anteriormente.");
-            return;
+
+            if (resp.length > 0) {
+                this.msgError("CEP ja informado anteriormente.");
+                return;
+            }
+
+            this.clienteSelecionado.enderecos.push(this.enderecoSelecionado);
+        } else {
+
+            for (let i = 0; i < this.clienteSelecionado.enderecos.length; i++) {
+                if (this.clienteSelecionado.enderecos[i].cep === this.enderecoSelecionado.cep) {
+                    this.clienteSelecionado.enderecos[i] = this.enderecoSelecionado;
+                    break;
+                }
+            }
+
         }
-
-        this.clienteSelecionado.enderecos.push(this.enderecoSelecionado);
         this.cancelEndereco();
 
     }
     public cancelEndereco() {
         this.enderecoFormulario = false;
         this.enderecoSelecionado = null;
+        this.isEdit=false;
     }
 
     //********************** end methos Process **********************/
