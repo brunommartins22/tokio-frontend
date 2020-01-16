@@ -16,7 +16,6 @@ export class Cliente implements OnInit {
     enderecoSelecionado: any = null;
 
     formulario: boolean = false;
-    errocep: boolean = false;
     progressSpinner: boolean = false;
     enderecoFormulario: boolean = false;
 
@@ -34,7 +33,7 @@ export class Cliente implements OnInit {
     loadEnderecoByCep() {
         let endereco = undefined;
         this.progressSpinner = true;
-        this.errocep = false;
+
 
         if (StringUtils.isEmpty(this.enderecoSelecionado.cep)) {
             this.enderecoSelecionado = new Object();
@@ -49,7 +48,7 @@ export class Cliente implements OnInit {
 
                 if (endereco.ibge === undefined) {
                     this.progressSpinner = false;
-                    this.errocep = true;
+
                 } else {
                     this.enderecoSelecionado.endereco = endereco.logradouro;
                     this.enderecoSelecionado.complemento = endereco.complemento;
@@ -57,13 +56,12 @@ export class Cliente implements OnInit {
                     this.enderecoSelecionado.cidade = endereco.localidade;
                     this.enderecoSelecionado.estado = endereco.uf
                     this.progressSpinner = false;
-                    this.errocep = false;
+
 
                 }
 
             }, error => {
                 this.progressSpinner = false;
-                this.errocep = true;
             });
     }
 
@@ -155,7 +153,7 @@ export class Cliente implements OnInit {
             return;
         }
 
-        if(this.clienteSelecionado.cpf.length<14){
+        if (this.clienteSelecionado.cpf.length < 14) {
             this.msgError("CPF do Cliente inválido.");
             return;
         }
@@ -165,7 +163,7 @@ export class Cliente implements OnInit {
             return;
         }
 
-       
+
 
 
         this.http.post("http://localhost:8080/api/clientes", this.clienteSelecionado).subscribe(data => {
@@ -226,28 +224,28 @@ export class Cliente implements OnInit {
             return;
         }
 
-        if(StringUtils.isEmpty(this.enderecoSelecionado.estado)){
+        if (StringUtils.isEmpty(this.enderecoSelecionado.estado)) {
             this.msgError("Estado não informado.");
             return;
         }
-        if(StringUtils.isEmpty(this.enderecoSelecionado.cidade)){
+        if (StringUtils.isEmpty(this.enderecoSelecionado.cidade)) {
             this.msgError("Cidade não informado.");
             return;
         }
-        if(StringUtils.isEmpty(this.enderecoSelecionado.endereco)){
+        if (StringUtils.isEmpty(this.enderecoSelecionado.endereco)) {
             this.msgError("Endereço não informado.");
             return;
         }
-        if(StringUtils.isEmpty(this.enderecoSelecionado.bairro)){
+        if (StringUtils.isEmpty(this.enderecoSelecionado.bairro)) {
             this.msgError("Bairro não informado.");
             return;
         }
-        if(StringUtils.isEmpty(this.enderecoSelecionado.fone1)){
+        if (StringUtils.isEmpty(this.enderecoSelecionado.fone1)) {
             this.msgError("Fone1 não informado.");
             return;
         }
-    
-        if(this.enderecoSelecionado.fone1.length < 15 || (this.enderecoSelecionado.fone2!=null && this.enderecoSelecionado.fone2!=undefined && this.enderecoSelecionado.fone2.length<15)){
+
+        if (this.enderecoSelecionado.fone1.length < 15 || (this.enderecoSelecionado.fone2 != null && this.enderecoSelecionado.fone2 != undefined && this.enderecoSelecionado.fone2.length < 15)) {
             this.msgError("Nº de telefone inválido.");
             return;
         }
