@@ -9,11 +9,15 @@ import { Cliente } from './pages/cadastro/cliente/cliente.component';
 import {FormsModule} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { PageMenu } from './pages/Menu/menu-component';
+import { PageHome } from './pages/home/home-component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    Cliente
+    Cliente,
+    PageMenu,
+    PageHome
   ],
   imports: [
     BrowserModule,
