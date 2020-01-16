@@ -69,6 +69,10 @@ export class Cliente implements OnInit {
         this.isVisibleMsg = true;
         this.msgForm = resp;
     }
+    private msgErrorInit(resp: string) {
+        this.isVisibleMsg = true;
+        this.msgInit = resp;
+    }
     private msgSucess(resp: string) {
 
         this.isVisibleMsg = true;
@@ -102,7 +106,7 @@ export class Cliente implements OnInit {
             this.listClient = data.json();
 
         }, erro => {
-
+        this.msgErrorInit(erro.message)
         })
     }
 
